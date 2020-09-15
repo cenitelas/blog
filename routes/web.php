@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,10 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [SiteController::class, 'index'])->name('index');
+
+Route::get('about',[SiteController::class,'about'])->name('about');
+
+Route::get('users/{user}/categories',[CategoryController::class,'index'])
+    ->name('categories.index');
+
+Route::get('categories/create',[CategoryController::class,'create'])
+    ->name('categories.create');
+
+Route::post('categories',[CategoryController::class,'store'])
+    ->name('categories.store');
+
+Route::get('categories/{category}',[CategoryController::class,'show'])
+    ->name('categories.show');
